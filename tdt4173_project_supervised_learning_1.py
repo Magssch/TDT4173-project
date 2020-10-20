@@ -18,8 +18,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.neighbors import KNeighborsClassifier
 
-train = pd.read_csv("/kaggle/input/60k-stack-overflow-questions-with-quality-rate/train.csv")
-valid = pd.read_csv("/kaggle/input/60k-stack-overflow-questions-with-quality-rate/valid.csv")
+train = pd.read_csv("data/cleaned_train.csv")
+valid = pd.read_csv("data/cleaned_valid.csv")
 data = pd.concat([train,valid], keys=["Id", "Title", "Body", "Tags", "CreationDate", "Y"])
 
 data=data.drop(['Id', 'CreationDate'], axis=1)
