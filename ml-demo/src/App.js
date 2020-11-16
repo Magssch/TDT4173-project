@@ -6,7 +6,10 @@ import {
 } from "react-router-dom";
 import './App.css';
 import NaiveBayes from "./pages/NB";
-import Header from "./pages/components/header";
+import Header from "./components/header";
+import KNeighbors from "./pages/KNN";
+import Recurrent from "./pages/RNN";
+import Landing from "./pages/Landing";
 
 function App() {
   return (
@@ -15,16 +18,16 @@ function App() {
         <Header/>
         <Switch>
           <Route exact path="/">
-            <div>Hello world</div>
+            <Landing/>
           </Route>
           <Route path="/nb">
             <NaiveBayes/>
           </Route>
           <Route path="/knn">
-            <div>K-nearest neighbors</div>
+            <KNeighbors/>
           </Route>
           <Route path="/rnn">
-            <div>Recurrent Neural Network with LSTM</div>
+            <Recurrent/>
           </Route>
         </Switch>
       </Router>
