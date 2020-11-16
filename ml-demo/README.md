@@ -1,3 +1,9 @@
+# Firebase deployment
+
+Follow this tutorial: https://www.robinwieruch.de/firebase-deploy-react-js. 
+Note the usage of `build` instead of `public` on initialization. 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
