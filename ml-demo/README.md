@@ -3,6 +3,7 @@
 Follow this tutorial: https://www.robinwieruch.de/firebase-deploy-react-js. 
 Note the usage of `build` instead of `public` on initialization. 
 
+Before running `firebase deploy`, make sure to run `npm run build` or `yarn build`
 
 # Getting Started with Create React App
 
