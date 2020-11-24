@@ -4,9 +4,10 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import HighQualityIcon from '@material-ui/icons/HighQuality';
 import { Button, TextField, Box, LinearProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import Tokenizer, { tokenizerFromJson } from './tokenizer';
 
-const tokenizer = text => {
-  let tokens = text
+const tokenize = text => {
+  /*let tokens = text
     .toLowerCase()
     .replace(/[^(a-zA-Z0-9)\s*+\-/=&|]/, "")
     .replace(/[!"#$%&()*+,\-./:;=?@[\\\]^_`{|}~\t\n\r]/g, " ")
@@ -25,8 +26,14 @@ const tokenizer = text => {
     for (let i = 0; i < 75 - size; i++) {
       tokens.unshift(0);
     }
-  }
-  return tokens;
+  }    
+  return tokens*/
+  const tokenizer = new Tokenizer();
+  let sequence = tokenizer.textsToSequences(text);
+  const padding = 75-sequence[0].length;
+  sequence = padding > 0 ? [(new Array(padding).fill(0)).concat(sequence[0])] : sequence; 
+  return [sequence[0].slice(-75,sequence[0].length)];
+;
 };
 
 const Recurrent = () => {
@@ -42,7 +49,7 @@ const Recurrent = () => {
       mode: 'cors', 
       'Content-Type': 'application/json',
       body: JSON.stringify({
-        "instances": [tokenizer(question)]
+        "instances": tokenize([question])
       })
     })
       .then(response=>response.json())
@@ -68,10 +75,10 @@ const Recurrent = () => {
                     pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed without a single edit.</Alert>
                   }
                   {
-                    pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and receive multiple community edits.</Alert>
+                    pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and multiple community edits.</Alert>
                   }
                   {
-                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success" iconMapping={{ success: <HighQualityIcon fontSize="inherit" /> }}>Great job! Our model is {Math.floor(pred[2]*100)}% confident that this is a high quality question that will get a 30+ score and not have a single edit.</Alert>
+                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success" iconMapping={{ success: <HighQualityIcon fontSize="inherit" /> }}>Great job! Our model is {Math.floor(pred[2]*100)}% confident that this is a high quality question that will get a high score and not have a single edit.</Alert>
                   }
                 </>
               }
