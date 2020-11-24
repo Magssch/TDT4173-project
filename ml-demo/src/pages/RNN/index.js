@@ -32,6 +32,7 @@ const Recurrent = () => {
   const [question, setQuestion] = React.useState("");
   const [pred, setPred] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [validate, setValidate] = React.useState(false);
 
   const requestPred = () => {
     setIsLoading(true);
@@ -56,7 +57,7 @@ const Recurrent = () => {
     <>
       <Box display="flex" flexDirection="column" mx={4} height={"90vh"}>
         <Box><h1>Recurrent Neural Network with LSTM</h1></Box>
-        <Box my={"auto"} mx={"auto"} width={"90%"} maxWidth={"800px"}> 
+        <Box mx={"auto"} mt={"auto"} width={"90%"} maxWidth={"800px"}> 
         {
             (pred || isLoading ) ? <>
               { 
@@ -76,15 +77,17 @@ const Recurrent = () => {
             </> : <Alert severity="info">What would you like to ask the StackOverflow community about today?</Alert>
         }
         </Box>
-        <Box flexDirection="column" my={"auto"} mx={"auto"} width={"90%"} maxWidth={"800px"}>
+        <Box flexDirection="column" mt={5} mb={"auto"} mx={"auto"} width={"90%"} maxWidth={"800px"}>
           <TextField 
             id="filled-basic" 
             label="Stackoverflow question" 
             variant="outlined" 
+            error={validate && (!question || question.length <= 0)}
+            helperText={validate && (!question || question.length <= 0) && "Question cannot be empty"}
             multiline={true}
             fullWidth={true}
             rows={15} 
-            onChange={(e) => setQuestion(e.target.value)} 
+            onChange={(e) => { setQuestion(e.target.value);  setValidate(true); }} 
           />
           <Box mt={4}>
             <Button
@@ -92,6 +95,7 @@ const Recurrent = () => {
               startIcon={<CloudUploadIcon/>}
               color="secondary"
               onClick={(e) => requestPred()}
+              disabled={!question || question.length <= 0}
             >
               Predict
             </Button>
