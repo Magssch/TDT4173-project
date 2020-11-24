@@ -1,6 +1,7 @@
 import React from "react";
 import word_index from "../../assets/word_index.json";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import HighQualityIcon from '@material-ui/icons/HighQuality';
 import { Button, TextField, Box, LinearProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
@@ -70,7 +71,7 @@ const Recurrent = () => {
                     pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and receive multiple community edits.</Alert>
                   }
                   {
-                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success">Great job! Our model is {Math.floor(pred[2]*100)}% confident that this question will get a 30+ score and not have a single edit.</Alert>
+                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success" iconMapping={{ success: <HighQualityIcon fontSize="inherit" /> }}>Great job! Our model is {Math.floor(pred[2]*100)}% confident that this is a high quality question that will get a 30+ score and not have a single edit.</Alert>
                   }
                 </>
               }
