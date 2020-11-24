@@ -1,10 +1,8 @@
 import React from "react";
 import word_index from "../../assets/word_index.json";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { Button, TextField, Box, CircularProgress, LinearProgress } from '@material-ui/core';
+import { Button, TextField, Box, LinearProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-
-const labels = ['LQ_CLOSE', 'LQ_EDIT', 'HQ']; 
 
 const tokenizer = text => {
   let tokens = text
