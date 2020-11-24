@@ -1,7 +1,7 @@
 import React from "react";
 import word_index from "../../assets/word_index.json";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { Button, TextField, Box } from '@material-ui/core';
+import { Button, TextField, Box, CircularProgress, LinearProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 const labels = ['LQ_CLOSE', 'LQ_EDIT', 'HQ']; 
@@ -33,8 +33,10 @@ const tokenizer = text => {
 const Recurrent = () => {
   const [question, setQuestion] = React.useState("");
   const [pred, setPred] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const requestPred = () => {
+    setIsLoading(true);
     fetch('http://localhost:5001/tdt4173-project-sl-1/us-central1/getQuestionQuality',{
       method: 'POST',
       mode: 'cors', 
@@ -48,40 +50,45 @@ const Recurrent = () => {
         console.log(response);
         setPred(response.predictions[0])
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(()=> setIsLoading(false));
   }
 
   return (
     <>
       <Box display="flex" flexDirection="column" mx={4} height={"90vh"}>
         <Box><h1>Recurrent Neural Network with LSTM</h1></Box>
+        <Box my={"auto"} mx={"auto"} width={"90%"} maxWidth={"800px"}> 
         {
-            pred && <Box my={"auto"}> 
-            {
-              pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed without a single edit.</Alert>
-            }
-            {
-              pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and receive multiple community edits.</Alert>
-            }
-            {
-              pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success">Great job! Our model is {Math.floor(pred[2]*100)}% confident that this question will get a 30+ score and not have a single edit.</Alert>
-            }
-          </Box>
+            (pred || isLoading ) ? <>
+              { isLoading && <LinearProgress color="secondary" /> }
+              {
+                pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed without a single edit.</Alert>
+              }
+              {
+                pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and receive multiple community edits.</Alert>
+              }
+              {
+                pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success">Great job! Our model is {Math.floor(pred[2]*100)}% confident that this question will get a 30+ score and not have a single edit.</Alert>
+              }
+            </> : <Alert severity="info">What would you like to ask the StackOverflow community about today?</Alert>
         }
+        </Box>
         <Box flexDirection="column" my={"auto"} mx={"auto"} width={"90%"} maxWidth={"800px"}>
           <TextField 
             id="filled-basic" 
             label="Stackoverflow question" 
-            variant="filled" 
+            variant="outlined" 
             multiline={true}
             fullWidth={true}
-            rows={20} 
+            rows={15} 
             onChange={(e) => setQuestion(e.target.value)} 
           />
           <Box mt={4}>
             <Button
               variant="contained"
               startIcon={<CloudUploadIcon/>}
+              color="secondary"
               onClick={(e) => requestPred()}
             >
               Predict
