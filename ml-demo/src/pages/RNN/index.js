@@ -61,15 +61,19 @@ const Recurrent = () => {
         <Box my={"auto"} mx={"auto"} width={"90%"} maxWidth={"800px"}> 
         {
             (pred || isLoading ) ? <>
-              { isLoading && <LinearProgress color="secondary" /> }
-              {
-                pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed without a single edit.</Alert>
-              }
-              {
-                pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and receive multiple community edits.</Alert>
-              }
-              {
-                pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success">Great job! Our model is {Math.floor(pred[2]*100)}% confident that this question will get a 30+ score and not have a single edit.</Alert>
+              { 
+                isLoading ? <LinearProgress color="secondary" /> 
+                : <>
+                  {
+                    pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed without a single edit.</Alert>
+                  }
+                  {
+                    pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and receive multiple community edits.</Alert>
+                  }
+                  {
+                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success">Great job! Our model is {Math.floor(pred[2]*100)}% confident that this question will get a 30+ score and not have a single edit.</Alert>
+                  }
+                </>
               }
             </> : <Alert severity="info">What would you like to ask the StackOverflow community about today?</Alert>
         }
