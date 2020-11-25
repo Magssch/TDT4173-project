@@ -39,6 +39,6 @@ export const getQuestionQuality = functions.https.onRequest(async (request, resp
                 console.log(res);
                 return response.send(JSON.stringify(res.data))
             }
-        );
+        ).catch(err => response.send(JSON.stringify(err)));
     })
 });
