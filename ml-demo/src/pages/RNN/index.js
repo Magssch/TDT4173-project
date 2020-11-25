@@ -30,9 +30,9 @@ const tokenize = text => {
   return tokens*/
   const tokenizer = new Tokenizer();
   let sequence = tokenizer.textsToSequences(text);
-  const padding = 75-sequence[0].length;
+  const padding = 150-sequence[0].length;
   sequence = padding > 0 ? [(new Array(padding).fill(0)).concat(sequence[0])] : sequence; 
-  return [sequence[0].slice(-75,sequence[0].length)];
+  return [sequence[0].slice(-150,sequence[0].length)];
 ;
 };
 
