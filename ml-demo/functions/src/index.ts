@@ -12,14 +12,9 @@ const cors = require("cors")({
     methods: ["POST"],
     credentials: true
   });
-import * as admin from 'firebase-admin';
 
 import { google } from 'googleapis';
 const ml = google.ml('v1')
-
-var serviceAccount = require('../firebase-creds.json');
-
-admin.initializeApp(serviceAccount);
 
 export const getQuestionQuality = functions.https.onRequest(async (request, response) => {
 
