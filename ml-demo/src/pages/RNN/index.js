@@ -34,6 +34,7 @@ const Recurrent = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const requestPred = () => {
+    console.log(tokenizer(question));
     setIsLoading(true);
     fetch('http://localhost:5001/tdt4173-project-sl-1/us-central1/getQuestionQuality',{
       method: 'POST',
