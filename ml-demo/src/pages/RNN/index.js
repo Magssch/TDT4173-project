@@ -72,13 +72,13 @@ const Recurrent = () => {
                 isLoading ? <LinearProgress color="secondary" /> 
                 : <>
                   {
-                    pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed without a single edit.</Alert>
+                    pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed.</Alert>
                   }
                   {
-                    pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score and multiple community edits.</Alert>
+                    pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score. Try to be more precise.</Alert>
                   }
                   {
-                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success" iconMapping={{ success: <HighQualityIcon fontSize="inherit" /> }}>Great job! Our model is {Math.floor(pred[2]*100)}% confident that this is a high quality question that will get a high score and not have a single edit.</Alert>
+                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success" iconMapping={{ success: <HighQualityIcon fontSize="inherit" /> }}>Great job! Our model is {Math.floor(pred[2]*100)}% confident that this is a high quality question that will get a high score.</Alert>
                   }
                 </>
               }
