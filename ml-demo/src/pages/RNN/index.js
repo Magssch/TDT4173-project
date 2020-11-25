@@ -43,7 +43,6 @@ const Recurrent = () => {
   const [validate, setValidate] = React.useState(false);
 
   const requestPred = () => {
-    console.log(tokenizer(question));
     setIsLoading(true);
     fetch('https://us-central1-tdt4173-project-sl-1.cloudfunctions.net/getQuestionQuality',{
       method: 'POST',
