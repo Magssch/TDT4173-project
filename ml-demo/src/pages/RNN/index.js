@@ -44,7 +44,7 @@ const Recurrent = () => {
 
   const requestPred = () => {
     setIsLoading(true);
-    fetch('http://localhost:5001/tdt4173-project-sl-1/us-central1/getQuestionQuality',{
+    fetch('https://us-central1-tdt4173-project-sl-1.cloudfunctions.net/getQuestionQuality',{
       method: 'POST',
       mode: 'cors', 
       'Content-Type': 'application/json',
