@@ -20,9 +20,6 @@ function App() {
           <Route exact path="/">
             <Landing/>
           </Route>
-          <Route path="/nb">
-            <NaiveBayes/>
-          </Route>
           <Route path="/knn">
             <KNeighbors/>
           </Route>

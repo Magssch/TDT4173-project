@@ -7,9 +7,6 @@ const Header = () => {
       <Link to="/">
         <div style={{padding: "12px"}}> Home </div>
       </Link>
-      <Link to="/nb">
-        <div style={{padding: "12px"}}> Naive Bayes </div>
-      </Link>
       <Link to="/knn">
         <div style={{padding: "12px"}}> KNN </div>
       </Link>

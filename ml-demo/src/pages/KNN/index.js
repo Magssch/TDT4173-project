@@ -126,7 +126,7 @@ const KNeighbors = () => {
             category in machine learning. This means that the algorithm uses a
             training set to determine a predictive model for new data points.
             Although kNN is mainly used for classification as in the example
-            above, it may also be used in combination with other machine
+            below, it may also be used in combination with other machine
             learning algorithms for regression. kNN is a lazy learning
             algorithm, which means that there is no explicit training phase.
             Instead of training a model, kNN uses all of the training data
