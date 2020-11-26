@@ -1,46 +1,61 @@
 import React from "react";
 import word_index from "../../assets/word_index.json";
+import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import HighQualityIcon from '@material-ui/icons/HighQuality';
-import { Button, TextField, Box, LinearProgress } from '@material-ui/core';
+import { Button, TextField, Box, LinearProgress, Card, CardContent, CardActions, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
+import { palette } from '@material-ui/system';
 import Tokenizer, { tokenizerFromJson } from './tokenizer';
 
-const tokenize = text => {
-  /*let tokens = text
-    .toLowerCase()
-    .replace(/[^(a-zA-Z0-9)\s*+\-/=&|]/, "")
-    .replace(/[!"#$%&()*+,\-./:;=?@[\\\]^_`{|}~\t\n\r]/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .split(" ")
-    .slice(0, 75);
+const sampleQuestions = [
+  {
+    quality: "High quality",
+    rating: 7944,
+    title: "How do I check if an element is hidden in jQuery?",
+    body: "Is it possible to toggle the visibility of an element, using the functions .hide(), .show() or .toggle()? How would you test if an element is visible or hidden?",
+    url: "https://stackoverflow.com/questions/178325/how-do-i-check-if-an-element-is-hidden-in-jquery",
+  },
+  {
+    quality: "Low quality and closed",
+    rating: -2,
+    title: "Planning to make web app like Canva",
+    body: "I want to make app like canva but i dont know where to start, i have good experience in html and css but a basic javascript. I need to know what they use. How to save html data to image like canva functions. How they save the data and load it again. I already try Html2canvas but problem in images limit.",
+    url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
+  },
+  {
+    quality: "Low quality and community editted",
+    rating: -4,
+    title: "i have json file on local computer i want to use that file in javascript how can i use that in js",
+    body: "Following is the code snippet which i am trying var json = require('dictonery.json'); //(with path) console.log(json);",
+    url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
+  },
+]
 
-  let size = tokens.length;
-  for (let i = 0; i < size; i++) {
-    const token = word_index[tokens[i]];
-    tokens[i] = token ? token : null;
-  }
-  tokens = tokens.filter(p => p != null);
-  size = tokens.length;
-  if (size < 75) {
-    for (let i = 0; i < 75 - size; i++) {
-      tokens.unshift(0);
-    }
-  }    
-  return tokens*/
+const tokenize = text => {
   const tokenizer = new Tokenizer();
   let sequence = tokenizer.textsToSequences(text);
   const padding = 150-sequence[0].length;
   sequence = padding > 0 ? [(new Array(padding).fill(0)).concat(sequence[0])] : sequence; 
   return [sequence[0].slice(-150,sequence[0].length)];
-;
 };
 
 const Recurrent = () => {
+  const classes = useStyles();
   const [question, setQuestion] = React.useState("");
   const [pred, setPred] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [validate, setValidate] = React.useState(false);
+
+  const handleLinkClick = (url) => {
+    window.location.href=url;
+  }
+
+  const autoFill = (body) => {
+    setQuestion(body);
+    window.scroll({top: 0, left: 0, behavior: 'smooth' })
+  }
 
   const requestPred = () => {
     setIsLoading(true);
@@ -63,55 +78,115 @@ const Recurrent = () => {
 
   return (
     <>
-      <Box display="flex" flexDirection="column" mx={4} height={"90vh"}>
-        <Box><h1>Recurrent Neural Network with LSTM</h1></Box>
-        <Box mx={"auto"} mt={"auto"} width={"90%"} maxWidth={"800px"}> 
-        {
-            (pred || isLoading ) ? <>
-              { 
-                isLoading ? <LinearProgress color="secondary" /> 
-                : <>
-                  {
-                    pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed.</Alert>
-                  }
-                  {
-                    pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score. Try to be more precise.</Alert>
-                  }
-                  {
-                    pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success" iconMapping={{ success: <HighQualityIcon fontSize="inherit" /> }}>Great job! Our model is {Math.floor(pred[2]*100)}% confident that this is a high quality question that will get a high score.</Alert>
-                  }
-                </>
-              }
-            </> : <Alert severity="info">What would you like to ask the StackOverflow community about today?</Alert>
-        }
-        </Box>
-        <Box flexDirection="column" mt={5} mb={"auto"} mx={"auto"} width={"90%"} maxWidth={"800px"}>
-          <TextField 
-            id="filled-basic" 
-            label="Stackoverflow question" 
-            variant="outlined" 
-            error={validate && (!question || question.length <= 0)}
-            helperText={validate && (!question || question.length <= 0) && "Question cannot be empty"}
-            multiline={true}
-            fullWidth={true}
-            rows={15} 
-            onChange={(e) => { setQuestion(e.target.value);  setValidate(true); }} 
-          />
-          <Box mt={4}>
-            <Button
-              variant="contained"
-              startIcon={<CloudUploadIcon/>}
-              color="secondary"
-              onClick={(e) => requestPred()}
-              disabled={!question || question.length <= 0}
+      <Box display="flex" flexDirection="row" flexWrap={"wrap"} mx={2} my={2}>
+        <Box display="flex" flexDirection="column" mx={"auto"} maxWidth={"1000px"} minWidth={"300px"}>
+          <Box>
+            <h1 id={"top"}>Recurrent Neural Network with LSTM</h1>
+            <Typography 
+              className={classes.title} 
+              color="textSecondary" 
             >
-              Predict
-            </Button>
+              Predicting StackOverflow question quality
+            </Typography>
           </Box>
+          <Box mx={"auto"} mt={4}> 
+          {
+              (pred || isLoading ) ? <>
+                { 
+                  isLoading ? <LinearProgress color="secondary" /> 
+                  : <>
+                    {
+                      pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed.</Alert>
+                    }
+                    {
+                      pred && pred[1] > pred[0] && pred[1] > pred[2] && <Alert severity="warning">This question could be improved: Our model is {Math.floor(pred[1]*100)}% confident that this question will receive a negative score. Try to be more precise.</Alert>
+                    }
+                    {
+                      pred && pred[2] > pred[0] && pred[2] > pred[1] && <Alert severity="success" iconMapping={{ success: <HighQualityIcon fontSize="inherit" /> }}>Great job! Our model is {Math.floor(pred[2]*100)}% confident that this is a high quality question that will get a high score.</Alert>
+                    }
+                  </>
+                }
+              </> : <Alert severity="info">What would you like to ask the StackOverflow community about today?</Alert>
+          }
+          </Box>
+          <Box flexDirection="column" mt={5} mb={"auto"} mx={"auto"} width={"100%"}>
+            <TextField 
+              id="filled-basic" 
+              label="Stackoverflow question" 
+              variant="outlined" 
+              value={question}
+              error={validate && (!question || question.length <= 0)}
+              helperText={validate && (!question || question.length <= 0) && "Question cannot be empty"}
+              multiline={true}
+              fullWidth={true}
+              rows={15}
+              color={"primary"}
+              onChange={(e) => { setQuestion(e.target.value);  setValidate(true); }} 
+            />
+            <Box mt={4}>
+              <Button
+                variant="contained"
+                startIcon={<CloudUploadIcon/>}
+                color={"secondary"}
+                onClick={(e) => requestPred()}
+                disabled={!question || question.length <= 0}
+              >
+                Predict
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+        <Box display="flex" flexDirection="column" maxWidth={"550px"} minWidth={"300px"}  mx={"auto"}>
+          <Box><h2>Or choose a sample question from stackoverflow.com</h2></Box>
+          {sampleQuestions.map((sampleQuestion, key) => (
+            <Card key={key} style={{marginTop: "1rem"}}>
+              <Box display="flex" flexDirection="row" m={2} style={{cursor: "pointer"}} onClick={() => autoFill(sampleQuestion.body)}>
+                <Box display="flex" flexDirection="column" alignItems={"center"} pt={2}>
+                  <KeyboardArrowUp/>
+                  <Typography variant="h5" component="h2">
+                    {sampleQuestion.rating}
+                  </Typography>
+                  <KeyboardArrowDown/>
+                </Box>
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    {sampleQuestion.quality}
+                  </Typography>
+                  <Typography variant="h5" component="h2">
+                    {sampleQuestion.title}
+                  </Typography>
+                  <Typography variant="body2" component="p" pt={3}>
+                    {sampleQuestion.body}
+                  </Typography>
+                </CardContent>
+              </Box>
+              <CardActions>
+                <Button size="small" onClick={(e) => {e.preventDefault(); handleLinkClick(sampleQuestion.url)}}>See question on stackoverflow.com</Button>
+              </CardActions>
+            </Card>
+          ))}
         </Box>
       </Box>
     </>
   );
 };
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+    scrollBehavior: "smooth"
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 export default Recurrent;
