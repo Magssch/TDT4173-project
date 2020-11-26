@@ -10,7 +10,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import { Alert } from '@material-ui/lab';
 import { palette } from '@material-ui/system';
 import Tokenizer, { tokenizerFromJson } from './tokenizer';
-
 const sampleQuestions = [
   {
     quality: "High quality",
@@ -27,11 +26,11 @@ const sampleQuestions = [
     url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
   },
   {
-    quality: "Low quality and editted",
+    quality: "Low quality and edited",
     rating: -4,
-    title: "i have json file on local computer i want to use that file in javascript how can i use that in js",
-    body: "Following is the code snippet which i am trying var json = require('dictonery.json'); //(with path) console.log(json);",
-    url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
+    title: "How to modify SDK manager path?",
+    body: '"Error:Cause: failed to find target with hash string \'android-19\' in: E:\android\android_sdk" but I have modified SDK path as "E:\android\android_sdk_19\Android\Android\sdk",which is shown in the pic below. I changed Project structure-SDK Location as "E:\android\android_sdk_19\Android\Android\sdk" too.',
+    url: "https://stackoverflow.com/questions/34606682/how-to-modify-sdk-manager-path",
   },
 ]
 const theme = createMuiTheme({
