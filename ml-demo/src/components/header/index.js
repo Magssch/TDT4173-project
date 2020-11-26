@@ -9,10 +9,10 @@ const Header = () => {
         <div style={{padding: "12px", color: "white"}}> Home </div>
       </Link>
       <Link to="/knn" style={{textDecoration: "none"}}>
-        <div style={{padding: "12px", color: "white", textDecoration: "none"}}> KNN </div>
+        <div style={{padding: "12px", color: "white", textDecoration: "none"}}> k-Nearest Neighbors </div>
       </Link>
       <Link to="/rnn" style={{textDecoration: "none"}}>
-        <div style={{padding: "12px", color: "white", textDecoration: "none"}}> RNN+LSTM </div>
+        <div style={{padding: "12px", color: "white", textDecoration: "none"}}> Recurrent Neural Network and Long Short-Term Memory </div>
       </Link>
     </div>
   );
