@@ -1,6 +1,6 @@
 import React from "react";
 import word_index from "../../assets/word_index.json";
-import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
+import { AccountBoxTwoTone, KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import HighQualityIcon from '@material-ui/icons/HighQuality';
 import { Button, TextField, Box, LinearProgress, Card, CardContent, CardActions, Typography } from '@material-ui/core';
@@ -27,7 +27,7 @@ const sampleQuestions = [
     url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
   },
   {
-    quality: "Low quality and community editted",
+    quality: "Low quality and editted",
     rating: -4,
     title: "i have json file on local computer i want to use that file in javascript how can i use that in js",
     body: "Following is the code snippet which i am trying var json = require('dictonery.json'); //(with path) console.log(json);",
@@ -90,23 +90,28 @@ const Recurrent = () => {
 
   return (
     <ThemeProvider theme={theme}>
-    <Box style={{background: "linear-gradient(110deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 50%), linear-gradient(110deg, #F48024 70%, #BCBBBB 5%)"}}>
+    <Box style={{background: "linear-gradient(110deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 40%), linear-gradient(110deg, #F48024 70%, #BCBBBB 5%)"}}>
       <Box display="flex" flexDirection="row" flexWrap={"wrap"} mx={2} py={2}>
-        <Box display="flex" flexDirection="column" mx={"auto"} maxWidth={"1000px"} minWidth={"300px"}>
+        <Box display="flex" flexDirection="column" mx={"auto"} maxWidth={"600px"} minWidth={"300px"}>
           <Box>
             <h1 id={"top"} style={{color: "#222426"}}>Recurrent Neural Network with LSTM</h1>
-            <Typography 
-              className={classes.title} 
-              color="textSecondary" 
-            >
-              Predicting Stack Overflow question quality
-            </Typography>
+            <Box maxWidth={"80%"} m={"auto"}>
+              <Typography 
+                className={classes.title} 
+                color="textSecondary" 
+              >
+                Predicting Stack Overflow question quality with the Keras API for Tensorflow. 
+                Test the accuracy of the model yourself by copying the text content of a real 
+                Stack Overflow question and click "Predict" to query the model on Google Cloud 
+                AI Platform and receive a quality prediction.
+              </Typography>
+            </Box>
           </Box>
-          <Box mx={"auto"} mt={4}> 
+          <Box mt={4}> 
           {
               (pred || isLoading ) ? <>
                 { 
-                  isLoading ? <LinearProgress color="secondary" /> 
+                  isLoading ? <Box><LinearProgress color="primary"/></Box>
                   : <>
                     {
                       pred && pred[0] > pred[1] && pred[0] > pred[2] && <Alert severity="error">This is likely a bad question: Our model is {Math.floor(pred[0]*100)}% confident that this question will receive a negative score and be closed.</Alert>
@@ -123,19 +128,23 @@ const Recurrent = () => {
           }
           </Box>
           <Box flexDirection="column" mt={5} mb={"auto"} mx={"auto"} width={"100%"}>
-            <TextField 
-              id="filled-basic" 
-              label="Stackoverflow question" 
-              variant="filled" 
-              value={question}
-              error={validate && (!question || question.length <= 0)}
-              helperText={validate && (!question || question.length <= 0) && "Question cannot be empty"}
-              multiline={true}
-              fullWidth={true}
-              rows={15}
-              color={"secondary"}
-              onChange={(e) => { setQuestion(e.target.value);  setValidate(true); }} 
-            />
+            <Card>
+              <Box p={2}>
+                <TextField 
+                  id="filled-basic" 
+                  label="Stackoverflow question" 
+                  variant="filled" 
+                  value={question}
+                  error={validate && (!question || question.length <= 0)}
+                  helperText={validate && (!question || question.length <= 0) && "Question cannot be empty"}
+                  multiline={true}
+                  fullWidth={true}
+                  rows={15}
+                  color={"secondary"}
+                  onChange={(e) => { setQuestion(e.target.value);  setValidate(true); }} 
+                />
+              </Box>
+            </Card>
             <Box mt={4}>
               <Button
                 variant="contained"
@@ -150,8 +159,8 @@ const Recurrent = () => {
             </Box>
           </Box>
         </Box>
-        <Box display="flex" flexDirection="column" maxWidth={"550px"} minWidth={"300px"}  mx={"auto"}>
-          <Box><h2 style={{color: "#222426"}}>Or choose a sample question from stackoverflow.com</h2></Box>
+        <Box display="flex" flexDirection="column" maxWidth={"500px"} minWidth={"300px"}  mx={"auto"}>
+          <Box><h2 style={{color: "#222426"}}>Or select and auto-fill a sample question from stackoverflow.com:</h2></Box>
           {sampleQuestions.map((sampleQuestion, key) => (
             <Card key={key} style={{marginTop: "1rem"}}>
               <Box display="flex" flexDirection="row" m={2} style={{cursor: "pointer"}} onClick={() => autoFill(sampleQuestion.body)}>
@@ -163,9 +172,6 @@ const Recurrent = () => {
                   <KeyboardArrowDown/>
                 </Box>
                 <CardContent>
-                  <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    {sampleQuestion.quality}
-                  </Typography>
                   <Typography variant="h5" component="h2">
                     {sampleQuestion.title}
                   </Typography>
@@ -176,6 +182,12 @@ const Recurrent = () => {
               </Box>
               <CardActions>
                 <Button size="small" onClick={(e) => {e.preventDefault(); handleLinkClick(sampleQuestion.url)}}>See question on stackoverflow.com</Button>
+                <Box flexGrow={1}></Box>
+                <Box mr={1}>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    {sampleQuestion.quality}
+                  </Typography>
+                </Box>
               </CardActions>
             </Card>
           ))}

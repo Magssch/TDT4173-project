@@ -127,9 +127,10 @@ const KNeighbors = () => {
           </Typography>
           <Typography align="left">
             Here we have created an interactive model for testing how kNN works in practice. By moving the scroll bars
-            on the top and right of the grid, it is possible to move the marker. Once the marker is placed, one can
-            choose any positive value for k. Press calculate to find out whether the marker will be classified as either
-            blue or red, based on the nearest k neighbors.
+            on the top and right of the grid, it is possible to move the marker, and by using the nummeric field you can
+            choose any positive value for k. The color of the marker is determined by looking at the colors of the
+            k nearest neighbors. Try moving the marker around and changing the number k to see the marker become
+            classified as either blue or red!
           </Typography>
         </Grid>
         <Grid container direction="row" xs={8} justify="center">
@@ -142,12 +143,16 @@ const KNeighbors = () => {
             id="myRange"
             style={{ width: "500px"}}
             onChange={(e) =>
-              setPoint({
-                X: e.target.value / 100 - 2,
-                Y: point.Y,
-                class: point.class,
-                movable: point.movable,
-              })
+              {
+                let calcClass = calulateClass(point, data, k);
+                setPoint({
+                  X: e.target.value / 100 - 2,
+                  Y: point.Y,
+                  class: calcClass[0],
+                  movable: point.movable,
+                });
+                setMaxVal(calcClass[1] * 100);
+              }
             }
           />
         </Grid>
@@ -177,12 +182,16 @@ const KNeighbors = () => {
                 id="myRange"
                 style={{ width: "500px", transform: "rotate(270deg)" }}
                 onChange={(e) =>
-                  setPoint({
-                    X: point.X,
-                    Y: e.target.value / 100 - 2,
-                    class: point.class,
-                    movable: point.movable,
-                  })
+                  {
+                    let calcClass = calulateClass(point, data, k);
+                    setPoint({
+                      X: point.X,
+                      Y: e.target.value / 100 - 2,
+                      class: calcClass[0],
+                      movable: point.movable,
+                    })
+                    setMaxVal(calcClass[1] * 100);
+                  }
                 }
               />
             </div>
@@ -195,15 +204,8 @@ const KNeighbors = () => {
               variant="outlined"
               type={"number"}
               value={k}
-              onChange={(e) => setK(e.target.value)}
+              onChange={(e) => {setK(e.target.value); calculate();}}
             />
-          </Grid>
-          <Grid item>
-            <Box mt={3}>
-              <Button top variant="contained" style={{color: "#FFFFFF"}} color="primary" onClick={() => calculate()}>
-                Calculate
-              </Button>
-            </Box>
           </Grid>
         </Grid>
       </Grid>
