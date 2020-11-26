@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div style={{ display: "flex", backgroundColor: "#222426", color: "white"}}>
+    <div style={{ display: "flex", backgroundColor: "#222426", color: "white", position: "fixed", width: "100%"}}>
       <Link to="/" style={{textDecoration: "none"}}>
         <div style={{padding: "12px", color: "white"}}> Home </div>
       </Link>
