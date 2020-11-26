@@ -110,7 +110,7 @@ const KNeighbors = () => {
             machine learning algorithms for regression. kNN is a lazy learning algorithm, which means that there is no
             explicit training phase. Instead of training a model, kNN uses all of the training data during test phase.
             The core of the kNN algorithm is simply measuring the distance between tested examples and training
-            examples. Although its simplistic nature, kNN has proven to be a very effective machine learning algorithm
+            examples. Although its simplistic nature, kNN has proven to be a very effective machine learning algorithm.
           </Typography>
           <Typography align="left">
             Here we have created an interactive model for testing how kNN works in practice. By moving the scroll bars
