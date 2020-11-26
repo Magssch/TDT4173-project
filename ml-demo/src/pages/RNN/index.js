@@ -10,7 +10,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import { Alert } from '@material-ui/lab';
 import { palette } from '@material-ui/system';
 import Tokenizer, { tokenizerFromJson } from './tokenizer';
-
 const sampleQuestions = [
   {
     quality: "High quality",
@@ -20,17 +19,17 @@ const sampleQuestions = [
     url: "https://stackoverflow.com/questions/178325/how-do-i-check-if-an-element-is-hidden-in-jquery",
   },
   {
+    quality: "Low quality and edited",
+    rating: -4,
+    title: "How to modify SDK manager path?",
+    body: '"Error:Cause: failed to find target with hash string \'android-19\' in: E:\android\android_sdk" but I have modified SDK path as "E:\android\android_sdk_19\Android\Android\sdk",which is shown in the pic below. I changed Project structure-SDK Location as "E:\android\android_sdk_19\Android\Android\sdk" too.',
+    url: "https://stackoverflow.com/questions/34606682/how-to-modify-sdk-manager-path",
+  },
+  {
     quality: "Low quality and closed",
     rating: -2,
     title: "Planning to make web app like Canva",
     body: "I want to make app like canva but i dont know where to start, i have good experience in html and css but a basic javascript. I need to know what they use. How to save html data to image like canva functions. How they save the data and load it again. I already try Html2canvas but problem in images limit.",
-    url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
-  },
-  {
-    quality: "Low quality and editted",
-    rating: -4,
-    title: "i have json file on local computer i want to use that file in javascript how can i use that in js",
-    body: "Following is the code snippet which i am trying var json = require('dictonery.json'); //(with path) console.log(json);",
     url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
   },
 ]
@@ -91,6 +90,7 @@ const Recurrent = () => {
   return (
     <ThemeProvider theme={theme}>
     <Box style={{background: "linear-gradient(110deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 40%), linear-gradient(110deg, #F48024 70%, #BCBBBB 5%)"}}>
+      <Box py={3}></Box>
       <Box display="flex" flexDirection="row" flexWrap={"wrap"} mx={2} py={2}>
         <Box display="flex" flexDirection="column" mx={"auto"} maxWidth={"600px"} minWidth={"300px"}>
           <Box>

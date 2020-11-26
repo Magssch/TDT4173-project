@@ -111,6 +111,7 @@ const KNeighbors = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Box py={3}></Box>
       <Box pt={2}>
         <h1>K-Nearest Neighbors</h1>
       </Box>
