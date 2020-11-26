@@ -1,17 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 const Header = () => {
   return (
-    <div style={{ display: "flex"}}>
-      <Link to="/">
-        <div style={{padding: "12px"}}> Home </div>
+    <div style={{ display: "flex", backgroundColor: "#222426", color: "white"}}>
+      <Link to="/" style={{textDecoration: "none"}}>
+        <div style={{padding: "12px", color: "white"}}> Home </div>
       </Link>
-      <Link to="/knn">
-        <div style={{padding: "12px"}}> KNN </div>
+      <Link to="/knn" style={{textDecoration: "none"}}>
+        <div style={{padding: "12px", color: "white", textDecoration: "none"}}> KNN </div>
       </Link>
-      <Link to="/rnn">
-        <div style={{padding: "12px"}}> RNN+LSTM </div>
+      <Link to="/rnn" style={{textDecoration: "none"}}>
+        <div style={{padding: "12px", color: "white", textDecoration: "none"}}> RNN+LSTM </div>
       </Link>
     </div>
   );

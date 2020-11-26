@@ -5,10 +5,23 @@ import * as d3 from "d3";
 import { Button, TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { Typography, Box } from "@material-ui/core";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 const euclideanDistance = (point1, point2) => {
   return Math.sqrt((parseFloat(point1.X) - point2.X) ** 2 + (parseFloat(point1.Y) - point2.Y) ** 2);
 };
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#F48024',
+    },
+    secondary: {
+      main: '#222426',
+    },
+  }
+});
 
 const calulateClass = (datapoint, data, k) => {
   let nearestArr = [];
@@ -97,8 +110,8 @@ const KNeighbors = () => {
   };
 
   return (
-    <>
-      <Box>
+    <ThemeProvider theme={theme}>
+      <Box pt={2}>
         <h1>K-Nearest Neighbors</h1>
       </Box>
       <Grid container alignItems="center" direction="column" spacing={5}>
@@ -127,7 +140,7 @@ const KNeighbors = () => {
             value={(point.X + 2) * 100}
             className="slider"
             id="myRange"
-            style={{ width: "500px" }}
+            style={{ width: "500px"}}
             onChange={(e) =>
               setPoint({
                 X: e.target.value / 100 - 2,
@@ -186,13 +199,15 @@ const KNeighbors = () => {
             />
           </Grid>
           <Grid item>
-            <Button top variant="contained" color="primary" onClick={() => calculate()}>
-              Calculate
-            </Button>
+            <Box mt={3}>
+              <Button top variant="contained" style={{color: "#FFFFFF"}} color="primary" onClick={() => calculate()}>
+                Calculate
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </ThemeProvider>
   );
 };
 
