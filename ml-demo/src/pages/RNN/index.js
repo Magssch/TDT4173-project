@@ -19,18 +19,18 @@ const sampleQuestions = [
     url: "https://stackoverflow.com/questions/178325/how-do-i-check-if-an-element-is-hidden-in-jquery",
   },
   {
-    quality: "Low quality and closed",
-    rating: -2,
-    title: "Planning to make web app like Canva",
-    body: "I want to make app like canva but i dont know where to start, i have good experience in html and css but a basic javascript. I need to know what they use. How to save html data to image like canva functions. How they save the data and load it again. I already try Html2canvas but problem in images limit.",
-    url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
-  },
-  {
     quality: "Low quality and edited",
     rating: -4,
     title: "How to modify SDK manager path?",
     body: '"Error:Cause: failed to find target with hash string \'android-19\' in: E:\android\android_sdk" but I have modified SDK path as "E:\android\android_sdk_19\Android\Android\sdk",which is shown in the pic below. I changed Project structure-SDK Location as "E:\android\android_sdk_19\Android\Android\sdk" too.',
     url: "https://stackoverflow.com/questions/34606682/how-to-modify-sdk-manager-path",
+  },
+  {
+    quality: "Low quality and closed",
+    rating: -2,
+    title: "Planning to make web app like Canva",
+    body: "I want to make app like canva but i dont know where to start, i have good experience in html and css but a basic javascript. I need to know what they use. How to save html data to image like canva functions. How they save the data and load it again. I already try Html2canvas but problem in images limit.",
+    url: "https://stackoverflow.com/questions/34583878/planning-to-make-web-app-like-canva/35942896",
   },
 ]
 const theme = createMuiTheme({
