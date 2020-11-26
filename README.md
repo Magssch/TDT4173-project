@@ -8,6 +8,10 @@ Each of the three approaches have their own .ipynb-file. To run these, simply cl
 The folder /ml-demo/ contains the code used to present our models in the above-mentioned website.
 
 ### Running ml-demo
+#### Download npm
+https://www.npmjs.com/get-npm
+#### Run the code
+
 Clone the repository, navigate into the /ml-demo/-folder and run `npm install`. After installing dependencies, run `npm start`. 
 
 The app will now be running at `http://localhost:3000`.
