@@ -22,7 +22,7 @@ const Landing = () =>{
             <Box mx={"auto"}>
                 <img src={logo} alt="Stack Overflow logo" style={{height: "40vh"}} />
             </Box>
-            <Box py={4} mx={"auto"} px={2} style={{backgroundColor: "#BCBBBB"}} width={"100%"}>
+            <Box py={4} mx={"auto"} style={{backgroundColor: "#BCBBBB"}} width={"100%"}>
                 <p><a href="https://github.com/erlinvan" style={{color: "#222426"}}>Erling Van De Weijer</a>, <a href="https://github.com/Oddarn1" style={{color: "#222426"}}>Odd André Owren</a>, <a href="https://github.com/Magssch" style={{color: "#222426"}}>Magnus Eide Schjølberg</a></p>
                 <br/>
                 <a href="https://github.com/Oddarn1/TDT4173-project" style={{border: "none", textDecoration: "none"}}><img src={github} alt="Github logo" style={{height: "5rem"}} /></a>
