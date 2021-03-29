@@ -133,8 +133,8 @@ const Recurrent = () => {
                   Predicting Stack Overflow question quality with the Keras API
                   for Tensorflow. Test the accuracy of the model yourself by
                   copying the text content of a real Stack Overflow question and
-                  click "Predict" to query the model on Google Cloud AI Platform
-                  and receive a quality prediction.
+                  click "Predict" to query a firebase function that will load a
+                  compiled TensorFlow model and return a predicted quality.
                 </Typography>
               </Box>
             </Box>
@@ -151,15 +151,16 @@ const Recurrent = () => {
                         <Alert severity="error">
                           This is likely a bad question: Our model is{" "}
                           {Math.floor(pred[0] * 100)}% confident that this
-                          question will receive a negative score and be closed.
+                          question will receive a negative score and be closed
+                          without a single edit.
                         </Alert>
                       )}
                       {pred && pred[1] > pred[0] && pred[1] > pred[2] && (
                         <Alert severity="warning">
                           This question could be improved: Our model is{" "}
                           {Math.floor(pred[1] * 100)}% confident that this
-                          question will receive a negative score. Try to be more
-                          precise.
+                          question will receive a negative score and multiple
+                          community edits. Try to be more precise.
                         </Alert>
                       )}
                       {pred && pred[2] > pred[0] && pred[2] > pred[1] && (
