@@ -44,7 +44,10 @@ export const getQuestionQuality = functions.https.onRequest(
   async (request, response) => {
     return cors(request, response, async () => {
       response.set("Content-Type", "Application/JSON");
-      response.set("Access-Control-Allow-Origin", "*");
+      response.set(
+        "Access-Control-Allow-Origin",
+        "https://tdt4173-project-sl-1.web.app"
+      );
       response.set("Vary", "Origin");
       const instances = JSON.parse(request.body).instances;
 
