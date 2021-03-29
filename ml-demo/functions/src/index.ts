@@ -40,8 +40,14 @@ async function loadModel(input: any) {
   return res;
 }
 
-export const getQuestionQuality = functions.https.onRequest(
-  async (request, response) => {
+const runtimeOpts: { timeoutSeconds: number; memory: any } = {
+  timeoutSeconds: 60,
+  memory: "1GB",
+};
+
+export const getQuestionQuality = functions
+  .runWith(runtimeOpts)
+  .https.onRequest(async (request, response) => {
     return cors(request, response, async () => {
       response.set("Content-Type", "Application/JSON");
       response.set(
@@ -60,5 +66,4 @@ export const getQuestionQuality = functions.https.onRequest(
           response.sendStatus(e);
         });
     });
-  }
-);
+  });
