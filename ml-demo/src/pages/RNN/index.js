@@ -113,6 +113,7 @@ const Recurrent = () => {
         style={{
           background:
             "linear-gradient(110deg, #FFFFFF 50%, rgba(0, 0, 0, 0) 40%), linear-gradient(110deg, #F48024 70%, #BCBBBB 5%)",
+          minHeight: "100%",
         }}
       >
         <Box py={3}></Box>
